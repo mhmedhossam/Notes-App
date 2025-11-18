@@ -4,7 +4,7 @@ import 'package:notes_app/core/utils/app_colors.dart';
 import 'package:notes_app/core/utils/textstyles.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
@@ -31,7 +31,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.onTap,
-    required this.controller,
+    this.controller,
     this.textInputAction,
     this.validator,
     this.onChanged,

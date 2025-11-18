@@ -46,22 +46,17 @@ class _AddNoteFormState extends State<AddNoteForm> {
           Text(" Enter your Note", style: TextStyles.textStyle26.copyWith()),
           Gap(20),
           CustomTextField(
-            onSaved: (value) {
-              title = value;
-            },
             validator: (value) {
               if (value?.isEmpty ?? true) {
                 return "this field is required";
               }
               return null;
             },
-            controller: TextEditingController(),
-            hintText: "enter your note",
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                // tempNote.title = value;
-              }
+            onSaved: (value) {
+              title = value;
             },
+            hintText: "enter your note",
+
             keyboardType: TextInputType.multiline,
           ),
           Gap(20),
@@ -76,15 +71,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
               subTitle = value;
             },
             hintText: "description",
-            controller: TextEditingController(),
             maxLine: 5,
 
             keyboardType: TextInputType.multiline,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                // tempNote.subTitle = value;
-              }
-            },
           ),
           Gap(20),
           Row(
