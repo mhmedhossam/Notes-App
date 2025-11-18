@@ -34,8 +34,7 @@ class _NotesViewState extends State<NotesView> {
           final result = await showModalBottomSheet<NoteModel>(
             context: context,
             builder: (context) {
-              return Spacer();
-              // return AddNoteButtonSheet(tempNote: tempNote);
+              return AddNoteButtonSheet();
             },
           );
           if (result != null) {

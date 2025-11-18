@@ -36,7 +36,7 @@ class _EditNoteViewState extends State<EditNoteView> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("  Note", style: Textstyles.textStyle26.copyWith()),
+                    Text("  Note", style: TextStyles.textStyle26.copyWith()),
                     Gap(20),
                     TextField(
                       onChanged: (value) {

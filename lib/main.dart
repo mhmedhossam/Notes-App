@@ -6,6 +6,7 @@ import 'package:notes_app/features/notes_view/presentation/view/notes_view.dart'
 import 'core/utils/theme_data.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox(kNotesBox);
   runApp(NotesApp());

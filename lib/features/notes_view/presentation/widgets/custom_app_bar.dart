@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       children: [
         Gap(5),
-        Text(title, style: Textstyles.textStyle30),
+        Text(title, style: TextStyles.textStyle30),
         Spacer(),
         TextButton(onPressed: toggleDark, child: Icon(Icons.dark_mode)),
 

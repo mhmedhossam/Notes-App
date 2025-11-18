@@ -46,14 +46,14 @@ class CustomNoteContainer extends StatelessWidget {
                 child: Text(
                   noteModel.subTitle,
                   softWrap: true,
-                  style: Textstyles.textStyle18.copyWith(
+                  style: TextStyles.textStyle18.copyWith(
                     color: const Color.fromARGB(77, 0, 0, 0),
                   ),
                 ),
               ),
               title: Text(
                 noteModel.title,
-                style: Textstyles.textStyle26.copyWith(color: Colors.black),
+                style: TextStyles.textStyle26.copyWith(color: Colors.black),
               ),
             ),
 
@@ -61,7 +61,7 @@ class CustomNoteContainer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
                 noteModel.date,
-                style: Textstyles.textStyle16.copyWith(
+                style: TextStyles.textStyle16.copyWith(
                   color: const Color.fromARGB(122, 0, 0, 0),
                 ),
               ),
