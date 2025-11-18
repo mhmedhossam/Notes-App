@@ -1,6 +1,6 @@
 class AddNoteStates {}
 
-class AddInitialState extends AddNoteStates {}
+class AddNoteInitialState extends AddNoteStates {}
 
 class AddSucceedState extends AddNoteStates {}
 
