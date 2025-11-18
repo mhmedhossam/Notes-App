@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/core/constants/app_fonts.dart';
-import 'package:notes_app/core/utils/app_colors.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notes_app/core/constants/constant.dart';
 import 'package:notes_app/features/notes_view/presentation/view/notes_view.dart';
 
 import 'core/utils/theme_data.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox(kNotesBox);
   runApp(NotesApp());
 }
 
