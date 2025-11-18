@@ -3,6 +3,8 @@ import 'package:notes_app/core/constants/app_fonts.dart';
 import 'package:notes_app/core/utils/app_colors.dart';
 import 'package:notes_app/features/notes_view/presentation/view/notes_view.dart';
 
+import 'core/utils/theme_data.dart';
+
 void main() {
   runApp(NotesApp());
 }
@@ -32,42 +34,7 @@ class _NotesAppState extends State<NotesApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: _dark ? Brightness.dark : Brightness.light,
-        fontFamily: AppFonts.poppins,
-        inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              width: 1,
-              color: Colors.white.withOpacity(0.2),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              width: 1,
-              color: Colors.white.withOpacity(0.2),
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              width: 1,
-              color: Colors.white.withOpacity(0.2),
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              width: 1,
-              color: Colors.white.withOpacity(0.2),
-            ),
-          ),
-          filled: true,
-          fillColor: Colors.black12,
-        ),
-      ),
+      theme: themeData(_dark),
       home: NotesView(toggleDark: toggleDark),
     );
   }

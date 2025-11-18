@@ -24,9 +24,13 @@ class NotesViewBody extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
         child: Column(
           children: [
-            CustomAppBar(toggleDark: toggleDark),
+            CustomAppBar(toggleDark: toggleDark, title: "Notes"),
 
-            NoteListViewbuild(listNoteModel: noteview, colors: colors),
+            NoteListViewbuild(
+              listNoteModel: noteview,
+              colors: colors,
+              toggleDark: toggleDark,
+            ),
           ],
         ),
       ),
