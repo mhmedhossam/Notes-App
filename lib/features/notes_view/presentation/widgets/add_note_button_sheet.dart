@@ -1,108 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gap/flutter_gap.dart';
-import 'package:notes_app/core/utils/textstyles.dart';
-import 'package:notes_app/features/notes_view/data/models/note_model.dart';
-import 'package:notes_app/features/notes_view/presentation/widgets/custom_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/add_note_cubit/notescubit.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/add_note_cubit/notesstates.dart';
 
-import 'custom_elevated_button.dart';
+import 'add_note_form.dart';
 
 class AddNoteButtonSheet extends StatelessWidget {
-  AddNoteButtonSheet({super.key, this.tempNote});
-
-  NoteModel? tempNote;
+  const AddNoteButtonSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(child: AddNoteForm()),
-      ),
-    );
-  }
-}
-
-class AddNoteForm extends StatefulWidget {
-  const AddNoteForm({super.key});
-
-  @override
-  State<AddNoteForm> createState() => _AddNoteFormState();
-}
-
-class _AddNoteFormState extends State<AddNoteForm> {
-  final formKey = GlobalKey<FormState>();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
-  String? title, subTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      autovalidateMode: autovalidateMode,
-      key: formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(" Enter your Note", style: TextStyles.textStyle26.copyWith()),
-          Gap(20),
-          CustomTextField(
-            validator: (value) {
-              if (value?.isEmpty ?? true) {
-                return "this field is required";
+        child: SingleChildScrollView(
+          child: BlocConsumer<AddNoteCubit, AddNoteStates>(
+            listener: (context, state) {
+              if (state is AddSucceedState) {
+                Navigator.pop(context);
               }
-              return null;
             },
-            onSaved: (value) {
-              title = value;
+            builder: (context, state) {
+              return ModalProgressHUD(
+                inAsyncCall: state is AddLoadingState ? true : false,
+                child: AddNoteForm(),
+              );
             },
-            hintText: "enter your note",
-
-            keyboardType: TextInputType.multiline,
           ),
-          Gap(20),
-          CustomTextField(
-            validator: (value) {
-              if (value?.isEmpty ?? true) {
-                return "this field is required";
-              }
-              return null;
-            },
-            onSaved: (value) {
-              subTitle = value;
-            },
-            hintText: "description",
-            maxLine: 5,
-
-            keyboardType: TextInputType.multiline,
-          ),
-          Gap(20),
-          Row(
-            children: [
-              Expanded(
-                child: CustomElevatedButton(
-                  buttonText: "Add",
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                    } else {
-                      autovalidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
-                  },
-                ),
-              ),
-              Gap(20),
-              Expanded(
-                child: CustomElevatedButton(
-                  buttonText: "close",
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
