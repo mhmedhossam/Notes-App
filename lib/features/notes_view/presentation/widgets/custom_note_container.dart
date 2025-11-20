@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:notes_app/core/utils/textstyles.dart';
 import 'package:notes_app/features/notes_view/data/models/note_model.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/notes_cubit/notescubit.dart';
+import 'package:notes_app/features/notes_view/presentation/view/edit_note_view.dart';
 
 class CustomNoteContainer extends StatelessWidget {
   final NoteModel noteModel;
-  final Color color;
-  final VoidCallback onDelete;
-  final VoidCallback onTap;
+  final VoidCallback toggleDark;
+
   const CustomNoteContainer({
     super.key,
     required this.noteModel,
-    required this.color,
-    required this.onDelete,
-    required this.onTap,
+    required this.toggleDark,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return EditNoteView(toggleDark: toggleDark, noteModel: noteModel);
+            },
+          ),
+        );
+      },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
-          color: color,
+          color: Color(noteModel.color),
           borderRadius: BorderRadius.circular(20),
         ),
         padding: EdgeInsets.only(top: 20, bottom: 20, left: 16),
@@ -34,7 +43,10 @@ class CustomNoteContainer extends StatelessWidget {
           children: [
             ListTile(
               trailing: IconButton(
-                onPressed: onDelete,
+                onPressed: () {
+                  noteModel.delete();
+                  context.read<NotesCubit>().fetchAllNotes();
+                },
                 icon: Icon(
                   FontAwesomeIcons.trash,
                   size: 26,

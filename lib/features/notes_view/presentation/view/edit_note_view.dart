@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gap/flutter_gap.dart';
+import 'package:notes_app/core/constants/constant.dart';
 import 'package:notes_app/core/utils/textstyles.dart';
 import 'package:notes_app/features/notes_view/data/models/note_model.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/notes_cubit/notescubit.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_app_bar.dart';
+import 'package:notes_app/features/notes_view/presentation/widgets/custom_circle_avatar.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_elevated_button.dart';
+import 'package:notes_app/features/notes_view/presentation/widgets/custom_text_field.dart';
+
+import '../widgets/custom_color_edit_list_builder.dart';
 
 class EditNoteView extends StatefulWidget {
   final VoidCallback toggleDark;
-  final NoteModel noteView;
+  final NoteModel noteModel;
   const EditNoteView({
     super.key,
     required this.toggleDark,
-    required this.noteView,
+    required this.noteModel,
   });
 
   @override
@@ -19,11 +26,12 @@ class EditNoteView extends StatefulWidget {
 }
 
 class _EditNoteViewState extends State<EditNoteView> {
-  String title = "";
-  String subtitle = "";
-  bool absorbing = true;
+  String? title, subtitle;
+
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<NotesCubit>();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -36,59 +44,56 @@ class _EditNoteViewState extends State<EditNoteView> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("  Note", style: TextStyles.textStyle26.copyWith()),
+                    Text(" my Note", style: TextStyles.textStyle26.copyWith()),
                     Gap(20),
-                    TextField(
+                    CustomTextField(
+                      hintText: widget.noteModel.title,
+
                       onChanged: (value) {
                         title = value;
-
-                        absorbing = title.isEmpty || subtitle.isEmpty;
-                        setState(() {});
                       },
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        hintText: widget.noteView.title,
-                      ),
                     ),
                     Gap(20),
-                    TextField(
-                      maxLines: 5,
-                      maxLength: 100,
-                      keyboardType: TextInputType.multiline,
+                    CustomTextField(
+                      hintText: widget.noteModel.subTitle,
                       onChanged: (value) {
                         subtitle = value;
-                        absorbing = title.isEmpty || subtitle.isEmpty;
-                        setState(() {});
                       },
-                      decoration: InputDecoration(
-                        alignLabelWithHint: true,
-                        hintText: widget.noteView.subTitle,
-                      ),
+
+                      maxLine: 5,
+
+                      keyboardType: TextInputType.multiline,
                     ),
+
+                    Gap(20),
+
+                    CustomColorEditListBuilder(noteModel: widget.noteModel),
                     Gap(20),
                     Row(
                       children: [
                         Expanded(
-                          child: AbsorbPointer(
-                            absorbing: absorbing,
-
-                            child: CustomElevatedButton(
-                              buttonText: "Edit",
-                              onPressed: () {
-                                if (title.isNotEmpty && subtitle.isNotEmpty) {
-                                  // widget.noteView.title = title;
-                                  // widget.noteView.subTitle = subtitle;
-                                  // Navigator.pop(context);
-                                } else {
-                                  Navigator.pop(context);
-                                }
-                              },
-                            ),
+                          child: CustomElevatedButton(
+                            isLoading: false,
+                            buttonText: "Edit",
+                            onPressed: () {
+                              widget.noteModel.title =
+                                  (title != null && title!.isNotEmpty
+                                  ? title
+                                  : widget.noteModel.title)!;
+                              widget.noteModel.subTitle =
+                                  (subtitle != null && subtitle!.isNotEmpty
+                                  ? subtitle
+                                  : widget.noteModel.subTitle)!;
+                              widget.noteModel.color = cubit.color;
+                              cubit.fetchAllNotes();
+                              Navigator.pop(context);
+                            },
                           ),
                         ),
                         Gap(20),
                         Expanded(
                           child: CustomElevatedButton(
+                            isLoading: false,
                             buttonText: "close",
                             onPressed: () {
                               Navigator.pop(context);

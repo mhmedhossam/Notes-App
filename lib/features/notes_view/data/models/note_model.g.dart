@@ -20,7 +20,6 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
       title: fields[0] as String,
       color: fields[3] as int,
       subTitle: fields[1] as String,
-      onTap: fields[4] as void Function(),
       date: fields[2] as String,
     );
   }
@@ -28,13 +27,11 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
   @override
   void write(BinaryWriter writer, NoteModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.subTitle)
-      ..writeByte(4)
-      ..write(obj.onTap)
       ..writeByte(2)
       ..write(obj.date)
       ..writeByte(3)

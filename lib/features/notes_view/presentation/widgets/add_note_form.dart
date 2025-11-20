@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gap/flutter_gap.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/core/utils/textstyles.dart';
+import 'package:notes_app/features/notes_view/data/models/note_model.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/add_note_cubit/addnotescubit.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/add_note_cubit/addnotesstates.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_elevated_button.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_text_field.dart';
+
+import 'custom_color_list_view_builder.dart';
 
 class AddNoteForm extends StatefulWidget {
   const AddNoteForm({super.key});
@@ -19,6 +26,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AddNoteCubit>();
+
     return Form(
       autovalidateMode: autovalidateMode,
       key: formKey,
@@ -58,24 +67,44 @@ class _AddNoteFormState extends State<AddNoteForm> {
             keyboardType: TextInputType.multiline,
           ),
           Gap(20),
+
+          CustomColorListViewBuilder(cubit: cubit),
+          Gap(20),
+
           Row(
             children: [
               Expanded(
-                child: CustomElevatedButton(
-                  buttonText: "Add",
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                    } else {
-                      autovalidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
+                child: BlocBuilder<AddNoteCubit, AddNoteStates>(
+                  builder: (context, state) {
+                    return CustomElevatedButton(
+                      isLoading: state is AddLoadingState ? true : false,
+                      buttonText: "Add",
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+                          var noteModel = NoteModel(
+                            title: title!,
+                            color: 0,
+                            subTitle: subTitle!,
+
+                            date: DateFormat(
+                              'yyyy-MM-dd',
+                            ).format(DateTime.now()),
+                          );
+                          cubit.addNote(noteModel);
+                        } else {
+                          autovalidateMode = AutovalidateMode.always;
+                          setState(() {});
+                        }
+                      },
+                    );
                   },
                 ),
               ),
               Gap(20),
               Expanded(
                 child: CustomElevatedButton(
+                  isLoading: false,
                   buttonText: "close",
                   onPressed: () {
                     Navigator.pop(context);

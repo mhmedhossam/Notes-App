@@ -13,34 +13,22 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-  final List<NoteModel> notes = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NotesViewBody(toggleDark: widget.toggleDark, noteview: notes),
+      body: NotesViewBody(toggleDark: widget.toggleDark),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primaryColor,
         foregroundColor: AppColors.secondColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        onPressed: () async {
-          // NoteModel tempNote = NoteModel(
-          //   title: '',
-          //   subTitle: '',
-          //   onTap: () {},
-          //   date:
-          //       "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-          // );
-          final result = await showModalBottomSheet<NoteModel>(
+        onPressed: () {
+          showModalBottomSheet<NoteModel>(
+            isScrollControlled: true,
             context: context,
             builder: (context) {
-              return AddNoteButtonSheet();
+              return SafeArea(child: AddNoteButtonSheet());
             },
           );
-          if (result != null) {
-            setState(() {});
-            notes.add(result);
-          }
         },
         child: Icon(Icons.add),
       ),

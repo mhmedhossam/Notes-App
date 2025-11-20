@@ -4,7 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notes_app/bloc_observer.dart';
 import 'package:notes_app/core/constants/constant.dart';
 import 'package:notes_app/features/notes_view/data/models/note_model.dart';
-import 'package:notes_app/features/notes_view/presentation/cubits/add_note_cubit/notescubit.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/add_note_cubit/addnotescubit.dart';
+import 'package:notes_app/features/notes_view/presentation/cubits/notes_cubit/notescubit.dart';
 import 'package:notes_app/features/notes_view/presentation/view/notes_view.dart';
 
 import 'core/utils/theme_data.dart';
@@ -13,8 +14,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Bloc.observer = BlocNoteObserver();
-  await Hive.openBox(kNotesBox);
   Hive.registerAdapter(NoteModelAdapter());
+
+  await Hive.openBox<NoteModel>(kNotesBox);
   runApp(NotesApp());
 }
 
@@ -41,14 +43,8 @@ class _NotesAppState extends State<NotesApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) {
-            return AddNoteCubit();
-          },
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => NotesCubit()..fetchAllNotes(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: themeData(_dark),
