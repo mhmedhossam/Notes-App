@@ -83,7 +83,9 @@ class _EditNoteViewState extends State<EditNoteView> {
                                   ? subtitle
                                   : widget.noteModel.subTitle)!;
                               widget.noteModel.color = cubit.color;
+                              widget.noteModel.save();
                               cubit.fetchAllNotes();
+
                               Navigator.pop(context);
                             },
                           ),
