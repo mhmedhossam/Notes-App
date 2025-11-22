@@ -43,10 +43,7 @@ class CustomNoteContainer extends StatelessWidget {
           children: [
             ListTile(
               trailing: IconButton(
-                onPressed: () {
-                  noteModel.delete();
-                  context.read<NotesCubit>().fetchAllNotes();
-                },
+                onPressed: () {},
                 icon: Icon(
                   FontAwesomeIcons.trash,
                   size: 26,

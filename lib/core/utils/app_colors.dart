@@ -6,4 +6,5 @@ class AppColors {
   static const color3 = Color.fromARGB(255, 61, 90, 236);
   static const primaryColor = Color(0xff62FCD7);
   static const secondColor = Color(0xffffffff);
+  static const error = Color.fromARGB(255, 249, 7, 7);
 }
