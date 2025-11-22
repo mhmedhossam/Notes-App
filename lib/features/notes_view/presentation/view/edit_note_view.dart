@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gap/flutter_gap.dart';
-import 'package:notes_app/core/constants/constant.dart';
 import 'package:notes_app/core/utils/textstyles.dart';
 import 'package:notes_app/features/notes_view/data/models/note_model.dart';
 import 'package:notes_app/features/notes_view/presentation/cubits/notes_cubit/notescubit.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_app_bar.dart';
-import 'package:notes_app/features/notes_view/presentation/widgets/custom_circle_avatar.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_elevated_button.dart';
 import 'package:notes_app/features/notes_view/presentation/widgets/custom_text_field.dart';
 
