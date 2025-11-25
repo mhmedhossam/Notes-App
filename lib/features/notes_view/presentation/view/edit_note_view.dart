@@ -24,6 +24,12 @@ class EditNoteView extends StatefulWidget {
 }
 
 class _EditNoteViewState extends State<EditNoteView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<NotesCubit>().resetColor();
+  }
+
   String? title, subtitle;
 
   @override
@@ -82,8 +88,9 @@ class _EditNoteViewState extends State<EditNoteView> {
                                   (subtitle != null && subtitle!.isNotEmpty
                                   ? subtitle
                                   : widget.noteModel.subTitle)!;
+
                               widget.noteModel.color =
-                                  widget.noteModel.color ?? cubit.color;
+                                  cubit.color ?? widget.noteModel.color;
                               widget.noteModel.save();
                               cubit.fetchAllNotes();
 

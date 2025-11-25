@@ -6,8 +6,12 @@ import 'package:notes_app/features/notes_view/presentation/cubits/notes_cubit/no
 
 class NotesCubit extends Cubit<NotesStates> {
   List<NoteModel> notesList = [];
-  int color = 0xFFFFD8CC;
+  int? color;
   NotesCubit() : super(NoteInitialState());
+
+  void resetColor() {
+    color = null;
+  }
 
   Future<void> fetchAllNotes() async {
     var noteBox = Hive.box<NoteModel>(kNotesBox);
