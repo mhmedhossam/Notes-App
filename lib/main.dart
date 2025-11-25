@@ -6,6 +6,7 @@ import 'package:notes_app/core/constants/constant.dart';
 import 'package:notes_app/features/notes_view/data/models/note_model.dart';
 import 'package:notes_app/features/notes_view/presentation/cubits/notes_cubit/notescubit.dart';
 import 'package:notes_app/features/notes_view/presentation/view/notes_view.dart';
+import 'package:notes_app/features/splash_screen/splash_screen.dart';
 
 import 'core/utils/theme_data.dart';
 
@@ -36,6 +37,8 @@ class _NotesAppState extends State<NotesApp> {
     _dark = widget.dark;
   }
 
+  // I use a simple function with an attribute to switch between dark and light themes.
+  // But in larger projects, I use a Theme Cubit to manage and control the theme state.
   void toggleDark() {
     setState(() => _dark = !_dark);
   }
@@ -47,7 +50,7 @@ class _NotesAppState extends State<NotesApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: themeData(_dark),
-        home: NotesView(toggleDark: toggleDark),
+        home: SplashScreen(toggleDark: toggleDark),
       ),
     );
   }
