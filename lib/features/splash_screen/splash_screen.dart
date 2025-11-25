@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return NotesView(toggleDark: widget.toStringShort);
+            return NotesView(toggleDark: widget.toggleDark);
           },
         ),
         (_) => true,
