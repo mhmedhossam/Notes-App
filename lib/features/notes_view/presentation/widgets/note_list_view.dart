@@ -28,6 +28,7 @@ class NoteListViewBuild extends StatelessWidget {
                         direction: DismissDirection.endToStart,
                         onDismissed: (direction) {
                           cubit.notesList[i].delete();
+                          cubit.fetchAllNotes();
                           // cubit.fetchAllNotes();
                         },
                         background: RemoveNoteCard(),
